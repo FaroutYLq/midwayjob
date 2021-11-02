@@ -6,7 +6,8 @@ import sys
 import numpy as np
 
 print("Finished importing, now start to load context.")
-st = straxen.contexts.xenonnt_online(output_folder='/dali/lgrandi/yuanlq/s1_wf_comparison')
+# Modify below for the strax.storage path
+st = straxen.contexts.xenonnt_online(output_folder='/dali/lgrandi/eangelino/s1_efficiency_data/rucio')
 
 _, runid = sys.argv
 print("Loaded the context successfully, and the run id to process:", runid)

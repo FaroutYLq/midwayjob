@@ -18,7 +18,7 @@ class Submit(object):
         eval('self.{name}(*args, **kwargs)'.format(name = self.name().lower()))
 
     def submit(self, loop_over=[], max_num_submit=10, nmax=3):
-        _start = 1
+        _start = 0
         self.max_num_submit = max_num_submit
         self.loop_over = loop_over
         self.p = True
@@ -41,11 +41,13 @@ class Submit(object):
     def _submit_single(self, loop_index, loop_item):
         jobname = 'extract_peaks{:03}'.format(loop_index)
         run_id = loop_item
-        jobstring = "python /home/yuanlq/nTslave/s1_pulse_shape/extract_peaks.py %s"%(run_id)
+        # Modify here for the script to run
+        jobstring = "python /home/yuanlq/software/midwayjob/process_events.py %s"%(run_id)
         print(jobstring)
 
+        # Modify here for the log name
         utilix.batchq.submit_job(
-            jobstring, log='/home/yuanlq/.tmp_job_submission/extract_peaks%s.log'%(run_id), partition='xenon1t', qos='xenon1t',
+            jobstring, log='/home/yuanlq/.tmp_job_submission/process_events%s.log'%(run_id), partition='xenon1t', qos='xenon1t',
             account='pi-lgrandi', jobname=jobname,
             delete_file=True, dry_run=False, mem_per_cpu=20000,
             container='xenonnt-development.simg',
@@ -53,7 +55,7 @@ class Submit(object):
 
 p = Submit()
 
-# The runids to process
+# Modify here for the runs to process
 loop_over = np.array(['026414'])
 print(len(loop_over))
 
