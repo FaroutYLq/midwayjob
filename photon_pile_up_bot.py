@@ -14,16 +14,19 @@ import s1pattern
 
 _, i = sys.argv # index for z group
 
+print('Begin to process bottom array pile-up fraction for z-cluster %s'%(i))
+i = eval(i)
+
 s1_pattern_map = s1pattern.make_map(map_file="/home/yuanlq/software/private_nt_aux_files/sim_files/XENONnT_s1_xyz_patterns_LCE_corrected_qes_MCva43fa9b_wires.pkl", fmt=None, method='WeightedNearestNeighbors')
 
 afts = []
-for i in range(10):
-    indices = (15,15,12+8*i) # just convered FV: -134.1021675cm - -17.719913100000014cm
+for k in range(10):
+    indices = (15,15,12+8*k) # just convered FV: -134.1021675cm - -17.719913100000014cm
     aft = s1_pattern_map.data['map'][indices[0],indices[1],indices[2],:253].sum()/s1_pattern_map.data['map'][indices[0],indices[1],indices[2],:].sum()
     afts.append(aft)
 
 n_resol = 100
-ns = np.linspace(10, 1000, n_resol, dtype=int) 
+ns = np.linspace(2, 1000, n_resol, dtype=int) 
 pile_frac_bot = np.zeros((n_resol))
 z_range_fv = np.linspace(-134.238, -13.6132, 11)
 
@@ -32,4 +35,8 @@ for j in range(n_resol):
     print('Started to process z group index ',ns[j])
     pile_frac_bot[j] = combpile.P_pile_n(n=ns[j], top=False, occupancies=occupancies, degeneracies=degeneracies, aft=afts[i])
 
-np.save('/home/yuanlq/combpile/results/phd_pile_up_frac_bot_z%s.py'%(i), pile_frac_bot)
+print('Begin to save top array pile-up fraction for z-cluster %s'%(i))
+
+np.save('/home/yuanlq/combpile/maps/phd_pile_up_frac_bot_z%s.npy'%(i), pile_frac_bot)
+
+print('Finished saving. Exiting.')
