@@ -7,7 +7,7 @@ from scipy.stats import binom
 import math
 import sys
 
-sys.path.append('/home/yuanlq/combpile')
+sys.path.append('/home/yuanlq/xenon/combpile')
 
 import combpile
 import s1pattern
@@ -37,6 +37,6 @@ for j in range(n_resol):
 
 print('Begin to save top array pile-up fraction for z-cluster %s'%(i))
 
-np.save('/home/yuanlq/combpile/maps/phd_pile_up_frac_top_z%s.npy'%(i), pile_frac_top)
+np.save('/home/yuanlq/xenon/combpile/maps/phd_pile_up_frac_top_z%s.npy'%(i), pile_frac_top)
 
 print('Finished saving. Exiting.')

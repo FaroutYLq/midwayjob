@@ -39,32 +39,24 @@ class Submit(object):
         return  jobNum -1
 
     def _submit_single(self, loop_index, loop_item):
-        jobname = 'process_fake_peaks{:03}'.format(loop_index)
-        run_id = loop_item
+        jobname = 'photon_tag_along_top{:03}'.format(loop_index)
+        z_indices = loop_item
         # Modify here for the script to run
-        jobstring = "python /home/yuanlq/software/midwayjob/process_fake_peaks.py %s"%(run_id)
+        jobstring = "python /home/yuanlq/software/midwayjob/photon_tag_along_top.py %s"%(z_indices)
         print(jobstring)
 
         # Modify here for the log name
         utilix.batchq.submit_job(
-            jobstring, log='/home/yuanlq/.tmp_job_submission/process_fake_peaks%s.log'%(run_id), partition='xenon1t', qos='xenon1t',
+            jobstring, log='/home/yuanlq/.tmp_job_submission/photon_tag_along_top%s.log'%(z_indices), partition='dali', qos='dali',
             account='pi-lgrandi', jobname=jobname,
-            delete_file=True, dry_run=False, mem_per_cpu=20000,
+            delete_file=True, dry_run=False, mem_per_cpu=10000,
             container='xenonnt-development.simg',
             cpus_per_task=1)
 
 p = Submit()
 
 # Modify here for the runs to process
-
-"""
-loop_over = np.array(['034277', '034370', '033850', 
-              '033784', '034707', 
-              '034710'])
-"""
-
-loop_over = np.array(['026414','026411','026409'])
-
-print('Runs to process: ', len(loop_over))
+loop_over = np.array([0,1,2,3,4,5,6,7,8,9])
+print('Z indicies to proceed: ', len(loop_over))
 
 p.execute(loop_over=loop_over, max_num_submit=21, nmax=10000)
