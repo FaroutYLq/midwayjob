@@ -24,11 +24,13 @@ st_fake_context.register(TruePeaksProcessing)
 _, runid = sys.argv
 print("Loaded the context successfully, and the run id to process:", runid)
 
-st_fake_context.make(runid,targets="true_peaks",config=dict(parent_s1_type='KrS1B', s1_min_coincidence=3,
+st_fake_context.make(runid,targets="true_peaks",config=dict(parent_s1_type='KrS1B', s1_min_coincidence=2,
+                    s2_merge_max_duration=3000,
                     replace_hit=True, n_repeat=30, upper_rhits_parent_fraction=0.9))
 
 """
 st_fake_context.make(runid,targets="true_peaks",config=dict(parent_s1_type='Ar', s1_min_coincidence=3,
+                    s2_merge_max_duration=3000,
                     replace_hit=True, n_repeat=10, upper_rhits_parent_fraction=0.9))
 """
 print('Done!')

@@ -14,7 +14,7 @@ print("Loaded the context successfully, and the run id to process:", runid)
 
 print("Start to make data")
 
-st.make(runid,"event_info")
+st.make(runid,"events_nv")
 
 if st.is_stored(runid,"event_info"):
     print('Finished all.')
