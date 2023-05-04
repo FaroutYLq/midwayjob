@@ -47,9 +47,9 @@ class Submit(object):
 
         # Modify here for the log name
         utilix.batchq.submit_job(
-            jobstring, log='/home/yuanlq/.tmp_job_submission/process_events%s.log'%(run_id), partition='xenon1t', qos='xenon1t',
+            jobstring, log='/home/yuanlq/.tmp_job_submission/process_peaklets%s.log'%(run_id), partition='xenon1t', qos='xenon1t',
             account='pi-lgrandi', jobname=jobname,
-            delete_file=True, dry_run=False, mem_per_cpu=16000,
+            delete_file=True, dry_run=False, mem_per_cpu=30000,
             container='xenonnt-development.simg',
             cpus_per_task=1)
 
@@ -57,7 +57,7 @@ p = Submit()
 
 # Modify here for the runs to process
 
-loop_over = np.array(['047625','049843', '051746', '052150', '048153', '051383', '052054'])
+loop_over = np.array(['051389', '050669', '050847'])
 
 print('Runs to process: ', len(loop_over))
 
