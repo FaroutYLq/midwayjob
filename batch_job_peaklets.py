@@ -49,7 +49,7 @@ class Submit(object):
         utilix.batchq.submit_job(
             jobstring, log='/home/yuanlq/.tmp_job_submission/process_peaklets%s.log'%(run_id), partition='xenon1t', qos='xenon1t',
             account='pi-lgrandi', jobname=jobname,
-            delete_file=True, dry_run=False, mem_per_cpu=30000,
+            delete_file=True, dry_run=False, mem_per_cpu=16000,
             container='xenonnt-development.simg',
             cpus_per_task=1)
 
@@ -57,7 +57,8 @@ p = Submit()
 
 # Modify here for the runs to process
 
-loop_over = np.array(['051389', '050669', '050847'])
+#loop_over = np.array(['047625','048153', '052150','051383', '051746', '052054','051389', '050669', '050847'])
+loop_over = np.array(['034310', '034307', '034304', '034301', '034298', '034295', '034292', '034289', '034286', '020412', '020396', '020402', '020392', '020394', '020387', '020384', '020382', '020380', '020381', '034695', '034692', '034689', '034686', '034683', '034680', '034677', '034674', '034671', '034668', '026076', '026075', '026074', '026073', '026072', '026071', '026070', '026069', '026068', '026067'])
 
 print('Runs to process: ', len(loop_over))
 
