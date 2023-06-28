@@ -81,8 +81,10 @@ def find_rules_info(dataset_dids):
         (('Stored in rse NIKHEF2_USERDISK', 'NIKHEF2_USERDISK'), np.bool),
         (('Stored in rse NIKHEF_USERDISK', 'NIKHEF_USERDISK'), np.bool),
         (('Stored in rse SDSC_USERDISK', 'SDSC_USERDISK'), np.bool),
+        (('Stored in rse SDSC_NSDF_USERDISK', 'SDSC_NSDF_USERDISK'), np.bool),
         (('Stored in rse SURFSARA_USERDISK', 'SURFSARA_USERDISK'), np.bool),
         (('Stored in rse UC_DALI_USERDISK', 'UC_DALI_USERDISK'), np.bool),
+        (('Stored in rse UC_MIDWAY_USERDISK', 'UC_MIDWAY_USERDISK'), np.bool),
         (('Stored in rse UC_OSG_USERDISK', 'UC_OSG_USERDISK'), np.bool),
         (('Lineage hash', 'hash'), 'O'),
         (('Data type', 'data_type'), 'O'),
@@ -111,8 +113,8 @@ def find_rules_info(dataset_dids):
     
     return rules_info
 
-dataset_dids = list_dataset_dids(to_delete_runids=np.arange(2510)+int(2510*eval(runid)), raw_type_only=False, peak_type_only=False,
+dataset_dids = list_dataset_dids(to_delete_runids=np.arange(2700)+int(2700*eval(runid)), raw_type_only=False, peak_type_only=False,
                                 exclude_peaklets_list=[])
 rules_info = find_rules_info(dataset_dids)
-np.save('/project2/lgrandi/yuanlq/shared/dali_cleanup/rucio_20230113_all_rules%s'%(runid),rules_info)
+np.save('/project2/lgrandi/yuanlq/shared/dali_cleanup/rucio_20230628_all_rules%s'%(runid),rules_info)
 print('Done!')
