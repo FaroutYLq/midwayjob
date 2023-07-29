@@ -39,7 +39,7 @@ class Submit(object):
         return  jobNum -1
 
     def _submit_single(self, loop_index, loop_item):
-        jobname = 'purge_{:03}'.format(loop_index)
+        jobname = 'completeness_{:03}'.format(loop_index)
         # Modify here for the script to run
         jobstring = "python /home/yuanlq/software/midwayjob/check_completeness.py %s %s"%(loop_item, loop_index)
         print(jobstring)
@@ -49,7 +49,7 @@ class Submit(object):
             jobstring, log='/home/yuanlq/.tmp_job_submission/missing_dids/completeness_%s.log'%(loop_index), 
             partition='broadwl', qos='broadwl',
             account='pi-lgrandi', jobname=jobname,
-            dry_run=False, mem_per_cpu=3000,
+            dry_run=False, mem_per_cpu=5000,
             container='xenonnt-development.simg',
             cpus_per_task=1)
 
@@ -58,6 +58,6 @@ p = Submit()
 # Modify here for the runs to process
 loop_over = glob.glob('/project2/lgrandi/yuanlq/shared/midway_corrupted/20230729/chunks/*')
 
-print('Run lists to purge: ', len(loop_over))
+print('Run lists to check completeness: ', len(loop_over))
 
 p.execute(loop_over=loop_over, max_num_submit=200, nmax=10000)
