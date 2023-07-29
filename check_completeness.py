@@ -31,10 +31,6 @@ def file_exists_in_directory(filename='peaklets-ui5hguaz2k-000302', directory='/
 
 st = cutax.xenonnt_offline()
 
-with open(directory, 'r') as f:
-    runids = [int(line.strip()) for line in f]
-
-
 # Just a concept. It is too slow to be run here.
 
 dtypes_to_check = ["peaklets", "lone_hits", "merged_s2s"]
@@ -46,7 +42,6 @@ hashes = {"peaklets": "ui5hguaz2k",
 runs = np.load(directory, allow_pickle=True)
 
 incomplete_dids = []
-
 incomplete_dids_loadable = {}
 missing_file_dids = {}
 missing_files_on_disk = {}
