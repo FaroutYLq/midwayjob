@@ -6,6 +6,7 @@ from tqdm import tqdm
 import numpy as np
 import os
 import matplotlib.pyplot as plt
+import gc
 
 OUTPUT_DIR = '/project2/lgrandi/yuanlq/shared/midway_corrupted/20230729/results/'
 
@@ -58,6 +59,8 @@ for run in tqdm(runs):
                 try:
                     temp = st.get_array(run, dtype, keep_columns=('time'), progress_bar=False)
                     incomplete_dids_loadable[did] = True
+                    del temp
+                    gc.collect()
                 except:
                     incomplete_dids_loadable[did] = False
                 missing_ids = find_missing_chunk(files[:-1], should_have_n_chunks)
