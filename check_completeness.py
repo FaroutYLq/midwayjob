@@ -56,7 +56,7 @@ for run in tqdm(runs):
             if len(files)-1 != should_have_n_chunks:
                 incomplete_dids.append(did)
                 try:
-                    temp = st.get_array(run, dtype, keep_columns=('time'))
+                    temp = st.get_array(run, dtype, keep_columns=('time'), progress_bar=False)
                     incomplete_dids_loadable[did] = True
                 except:
                     incomplete_dids_loadable[did] = False
