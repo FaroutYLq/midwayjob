@@ -8,7 +8,7 @@ import os
 import matplotlib.pyplot as plt
 import gc
 
-OUTPUT_DIR = '/project2/lgrandi/yuanlq/shared/midway_corrupted/20230729/results/'
+OUTPUT_DIR = '/project2/lgrandi/yuanlq/shared/midway_corrupted/20230821/results/'
 
 _, directory, index = sys.argv
 print("The directory to process:", directory)

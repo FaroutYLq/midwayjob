@@ -56,7 +56,7 @@ class Submit(object):
 p = Submit()
 
 # Modify here for the runs to process
-loop_over = glob.glob('/project2/lgrandi/yuanlq/shared/midway_corrupted/20230729/chunks/*')
+loop_over = glob.glob('/project2/lgrandi/yuanlq/shared/midway_corrupted/20230821/chunks/*')
 
 print('Run lists to check completeness: ', len(loop_over))
 
