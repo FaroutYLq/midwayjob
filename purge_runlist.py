@@ -29,4 +29,4 @@ for run in tqdm(runids):
                                     str(st.key_for(run,dtype)).split('-')[-1])
 
 corrupted_dids = np.array(corrupted_dids)
-np.save('/project2/lgrandi/yuanlq/shared/midway_corrupted/20230725/'+'purge_%s.npy'%(index), corrupted_dids)
+np.save('/project2/lgrandi/yuanlq/shared/midway_corrupted/20230821/'+'purge_%s.npy'%(index), corrupted_dids)
