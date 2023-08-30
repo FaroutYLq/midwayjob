@@ -116,5 +116,5 @@ def find_rules_info(dataset_dids):
 dataset_dids = list_dataset_dids(to_delete_runids=np.arange(2700)+int(2700*eval(runid)), raw_type_only=False, peak_type_only=False,
                                 exclude_peaklets_list=[])
 rules_info = find_rules_info(dataset_dids)
-np.save('/project2/lgrandi/yuanlq/shared/dali_cleanup/rucio_20230628_all_rules%s'%(runid),rules_info)
+np.save('/project2/lgrandi/yuanlq/shared/dali_cleanup/rucio_20230831_all_rules%s'%(runid),rules_info)
 print('Done!')
