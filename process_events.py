@@ -5,7 +5,7 @@ import sys
 import gc
 import cutax
 
-output_dir = '/scratch/midway3/yuanlq/download/sr0_bkg_unfinished'
+output_dir = '/scratch/midway3/yuanlq/download/sr0_rn220_unfinished'
 print("Finished importing, now start to load context.")
 # Modify below for the strax.storage path
 st = cutax.xenonnt_offline(output_folder=output_dir)
@@ -35,6 +35,14 @@ print("event_basics done")
 st.make(runid,"event_info")
 gc.collect()
 print("event_info done")
+
+st.make(runid,"event_shadow")
+gc.collect()
+print("event_shadow done")
+
+st.make(runid,"event_ambience")
+gc.collect()
+print("event_ambience done")
 
 st.make(runid,"event_pattern_fit")
 gc.collect()
