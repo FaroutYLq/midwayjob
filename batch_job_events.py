@@ -61,4 +61,4 @@ loop_over = np.array(['055787', '055791', '055800', '055802', '055804', '055809'
 
 print('Runs to process: ', len(loop_over))
 
-p.execute(loop_over=loop_over, max_num_submit=21, nmax=10000)
+p.execute(loop_over=loop_over, max_num_submit=100, nmax=10000)
