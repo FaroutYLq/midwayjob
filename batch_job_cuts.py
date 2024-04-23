@@ -47,7 +47,7 @@ class Submit(object):
 
         # Modify here for the log name
         utilix.batchq.submit_job(
-            jobstring, log='/home/yuanlq/.tmp_job_submission/cuts/process_cuts%s.log'%(run_id), 
+            jobstring=jobstring, log='/home/yuanlq/.tmp_job_submission/cuts/process_cuts%s.log'%(run_id), 
             partition='caslake', qos='caslake',
             account='pi-lgrandi', jobname=jobname,
             mem_per_cpu=5000,
