@@ -453,10 +453,14 @@ cannot_copy_dt = []
 for r in tqdm(loop_over):
     run = str(r).zfill(6)
     for dt in to_copy:
-        if not st_dali.is_stored(r, dt):
+        if (not st_dali.is_stored(r, dt)) and st_midway.is_stored(r, dt):
             try:
                 st_midway.copy_to_frontend(run, dt)
             except:
                 cannot_copy_runid.append(r)
                 cannot_copy_dt.append(dt)
                 print(f'Cannot copy {r} {dt}')
+
+import numpy as np
+np.save('/home/yuanlq/cannot_copy_runid.npy', np.array(cannot_copy_runid))
+np.save('/home/yuanlq/cannot_copy_dt.npy', np.array(cannot_copy_dt))
