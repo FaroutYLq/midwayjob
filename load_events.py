@@ -10,7 +10,7 @@ from random import randint
 
 print("Finished importing, now start to load context.")
 # Modify below for the strax.storage path
-st = cutax.xenonnt_offline(output_folder="/project/lgrandi/yuanlq/cuts")
+st = cutax.xenonnt_offline()
 _, runid = sys.argv
 runid = str(runid).zfill(6)
 
@@ -38,14 +38,14 @@ try:
 except:
     sleep_time = randint(1, 5)  # Random integer between 1 and 5
     time.sleep(sleep_time)
-    with open('/project/lgrandi/yuanlq/loadtest/events.txt', 'w') as f:
-        f.write(runid)
+    with open('/project/lgrandi/yuanlq/loadtest/events.txt', 'a') as f:
+        f.write(runid+"\n")
 try:
     tried = st.get_array(runid, ("peak_positions", "peak_basics"), keep_columns=("time"))
 except:
     sleep_time = randint(1, 5)  # Random integer between 1 and 5
     time.sleep(sleep_time)
-    with open('/project/lgrandi/yuanlq/loadtest/peakb.txt', 'w') as f:
-        f.write(runid)
+    with open('/project/lgrandi/yuanlq/loadtest/peakb.txt', 'a') as f:
+        f.write(runid+"\n")
 
 print('Done with run %s!'%(runid))
