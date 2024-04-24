@@ -1,7 +1,9 @@
 import cutax
 from tqdm import tqdm
 
-st_midway = cutax.xenonnt_offline(output_folder="/dali/lgrandi/yuanlq/pb")
+st_midway = cutax.xenonnt_offline(output_folder="/dali/lgrandi/yuanlq/pb",
+                                  _rucio_local_path='/project/lgrandi/rucio', 
+                                  include_rucio_local = True)
 st_dali = cutax.xenonnt_offline(_auto_append_rucio_local=False, 
                                 _rucio_local_path='/dali/lgrandi/rucio', 
                                 include_rucio_local=True)
