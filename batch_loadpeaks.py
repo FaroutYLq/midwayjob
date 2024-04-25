@@ -53,10 +53,10 @@ class Submit(object):
         return  jobNum -1
 
     def _submit_single(self, loop_index, loop_item):
-        jobname = 'loading_%s'%(loop_index)
         batch_i = loop_index
+        jobname = 'loading_%s'%(batch_i)
         # Modify here for the script to run
-        jobstring = "python /home/yuanlq/loadtest/load_peaks.py '%s'"%(loop_item)
+        jobstring = "python /home/yuanlq/loadtest/load_peaks.py '%s'"%(list(loop_item))
         print(jobstring)
 
         # Modify here for the log name
@@ -75,6 +75,7 @@ with open('/project2/lgrandi/xenonnt/reprocessing_runlist/global_v13/runlists_re
     all_runs = pickle.load(f)
 interested_runlist = all_runs['runlists']['sr1_kr83m']
 loop_over = chunk_list(interested_runlist, chunk_size=40)
+print(loop_over)
 
 print('Batches to process: ', len(loop_over))
 
