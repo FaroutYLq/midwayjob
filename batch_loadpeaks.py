@@ -61,7 +61,7 @@ class Submit(object):
 
         # Modify here for the log name
         utilix.batchq.submit_job(
-            jobstring=jobstring, log='/dali/lgrandi/yuanlq/logs/loadtest/load_peaks_batch%s.log'%(batch_i), 
+            jobstring=jobstring, log='/dali/lgrandi/yuanlq/logs/loadtest/sr1_rn222/load_peaks_batch%s.log'%(batch_i), 
             partition='dali', qos='dali',
             account='pi-lgrandi', jobname=jobname,
             mem_per_cpu=40000,
@@ -73,7 +73,7 @@ p = Submit()
 # Modify here for the runs to process
 with open('/project2/lgrandi/xenonnt/reprocessing_runlist/global_v13/runlists_reprocessing_global_v13.pickle', 'rb') as f:
     all_runs = pickle.load(f)
-interested_runlist = all_runs['runlists']['sr1_kr83m']
+interested_runlist = all_runs['runlists']['sr1_rn222']
 loop_over = chunk_list(interested_runlist, chunk_size=40)
 print(loop_over)
 

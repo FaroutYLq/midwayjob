@@ -8,7 +8,10 @@ from random import randint
 
 print("Finished importing, now start to load context.")
 # Modify below for the strax.storage path
-st = cutax.xenonnt_offline(output_folder='/dali/lgrandi/yuanlq/pb')
+st = cutax.xenonnt_offline(_auto_append_rucio_local=False, 
+                           _rucio_local_path='/dali/lgrandi/rucio', 
+                           include_rucio_local=True, 
+                           output_folder='/dali/lgrandi/yuanlq/pb')
 _, list_dir = sys.argv
 data_list = ast.literal_eval(list_dir)
 
@@ -35,7 +38,7 @@ for r in data_list:
             tried = st.get_array(runid, ("peaks","peak_basics", "peak_positions"), keep_columns=("time"))
             sleep_time = randint(1, 5)  # Random integer between 1 and 5
             time.sleep(sleep_time)
-            with open('/dali/lgrandi/yuanlq/loadtest/loadable_peaks.txt', 'a') as f:
+            with open('/dali/lgrandi/yuanlq/loadtest/sr1_rn222_loadable_peaks.txt', 'a') as f:
                 f.write(runid+"\n")
         except:
             pass
