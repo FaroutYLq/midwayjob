@@ -35,17 +35,14 @@ to_load = [("event_info", "cuts_basic"), ("peak_positions", "peak_basics")]
 
 try:
     tried = st.get_array(runid, ("event_info", "cuts_basic"), keep_columns=("time"))
-except:
-    sleep_time = randint(1, 5)  # Random integer between 1 and 5
-    time.sleep(sleep_time)
-    with open('/project/lgrandi/yuanlq/loadtest/events.txt', 'a') as f:
-        f.write(runid+"\n")
-try:
     tried = st.get_array(runid, ("peak_positions", "peak_basics"), keep_columns=("time"))
-except:
     sleep_time = randint(1, 5)  # Random integer between 1 and 5
     time.sleep(sleep_time)
-    with open('/project/lgrandi/yuanlq/loadtest/peakb.txt', 'a') as f:
+    with open('/project/lgrandi/yuanlq/loadtest/sr1_bkg_loadable_events.txt', 'a') as f:
         f.write(runid+"\n")
+except Exception as e:
+    print("Failed", runid, "event_info", "cuts_basic")
+    print(e)
+
 
 print('Done with run %s!'%(runid))
