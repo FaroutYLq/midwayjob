@@ -1,6 +1,7 @@
 import numpy as np
 import time
 import os, shlex
+import pickle
 #from subprocess import Popen, PIPE, STDOUT, TimeoutExpired
 import utilix
 from utilix.batchq import *
