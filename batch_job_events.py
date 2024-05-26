@@ -39,26 +39,24 @@ class Submit(object):
         return  jobNum -1
 
     def _submit_single(self, loop_index, loop_item):
-        jobname = 'process_events{:03}'.format(loop_index)
         run_id = loop_item
+        jobname = 'process_events{}'.format(run_id)
         # Modify here for the script to run
         jobstring = "python /home/yuanlq/software/midwayjob/process_events.py %s"%(run_id)
         print(jobstring)
 
         # Modify here for the log name
         utilix.batchq.submit_job(
-            jobstring, log='/home/yuanlq/.tmp_job_submission/sr2_ambe/process_events%s.log'%(run_id), partition='xenon1t', qos='xenon1t',
+            jobstring=jobstring, log='/dali/lgrandi/yuanlq/dacheng236/process_events%s.log'%(run_id), 
+            partition='dali', qos='dali',
             account='pi-lgrandi', jobname=jobname,
-            delete_file=True, dry_run=False, mem_per_cpu=30000,
-            container='xenonnt-2023.07.1.simg',
+            dry_run=False, mem_per_cpu=45000, #exclude_nodes='dali001,dali003,dali005',
+            container='xenonnt-2023.10.1.simg',
             cpus_per_task=1)
 
 p = Submit()
 
-# Modify here for the runs to process
-loop_over = np.array(['055787', '055791', '055800', '055802', '055804', '055809', '055822', '055827', '055829', '055830', '055833', '055835', '055836', '055838', '055839'])
-#loop_over = np.array(['051538'])
-
+loop_over = ["031782", "031514", "031732", "031163", "026002", "025801", "025894"]
 print('Runs to process: ', len(loop_over))
 
-p.execute(loop_over=loop_over, max_num_submit=100, nmax=10000)
+p.execute(loop_over=loop_over, max_num_submit=5000, nmax=10000)
