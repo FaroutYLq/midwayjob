@@ -1,16 +1,62 @@
-import cutax
-from tqdm import tqdm
+import numpy as np
+import time
+import os, shlex
+#from subprocess import Popen, PIPE, STDOUT, TimeoutExpired
+import utilix
+from utilix.batchq import *
+print(utilix.__file__)
 
-st_midway = cutax.xenonnt_offline(output_folder="/dali/lgrandi/yuanlq/pb",
-                                  _rucio_local_path='/project/lgrandi/rucio', 
-                                  include_rucio_local = True)
-st_dali = cutax.xenonnt_offline(_auto_append_rucio_local=False, 
-                                _rucio_local_path='/dali/lgrandi/rucio', 
-                                include_rucio_local=True)
+class Submit(object):
+    '''
+        Take maximum number of nodes to use at once
+        Submit each group to a node and excute
+    '''
+    def name(self):
+        return self.__class__.__name__
 
-to_copy = ["peak_basics", "peaklet_classification", "merged_s2s", 
-           "peak_positions_mlp", "peak_positions_cnn", "peak_positions_gcn"]
+    def execute(self, *args, **kwargs):
+        eval('self.{name}(*args, **kwargs)'.format(name = self.name().lower()))
 
+    def submit(self, loop_over=[], max_num_submit=10, nmax=3):
+        _start = 0
+        self.max_num_submit = max_num_submit
+        self.loop_over = loop_over
+        self.p = True
+
+        index = _start
+        while (index < len(self.loop_over) and index < nmax):
+            if (self.working_job() < self.max_num_submit):
+                self._submit_single(loop_index=index,
+                                    loop_item=self.loop_over[index])
+
+                time.sleep(1.0)
+                index += 1
+
+    # check my jobs
+    def working_job(self):
+        cmd='squeue --user={user} | wc -l'.format(user = 'yuanlq')
+        jobNum=int(os.popen(cmd).read())
+        return  jobNum -1
+
+    def _submit_single(self, loop_index, loop_item):
+        jobname = 'process_cuts%s'%(loop_item)
+        run_id = loop_item
+        # Modify here for the script to run
+        jobstring = "python /home/yuanlq/software/midwayjob/process_cuts.py %s"%(run_id)
+        print(jobstring)
+
+        # Modify here for the log name
+        utilix.batchq.submit_job(
+            jobstring=jobstring, log='/home/yuanlq/.tmp_job_submission/cuts/process_cuts%s.log'%(run_id), 
+            partition='caslake', qos='caslake',
+            account='pi-lgrandi', jobname=jobname,
+            mem_per_cpu=5000,
+            container='xenonnt-development.simg',
+            cpus_per_task=1)
+
+p = Submit()
+
+# Modify here for the runs to process
 loop_over = [53505, 53504, 53503, 53502, 53498, 53497, 53496, 53495, 53494,
        53493, 53492, 53491, 53490, 53489, 53488, 53487, 53486, 53485,
        53484, 53483, 53482, 53481, 53480, 53479, 53478, 53477, 53476,
@@ -429,40 +475,7 @@ loop_over = [53505, 53504, 53503, 53502, 53498, 53497, 53496, 53495, 53494,
        47746, 47745, 47744, 47743, 47742, 47740, 47739, 47738, 47737,
        47736, 47735, 47734, 47733, 47732, 47731, 47730, 47727, 47726,
        47724, 47723, 47721, 47720, 47718, 47717, 47716, 47712, 47711,
-       47710, 47709, 47707, 47706, 47704, 47703, 47702, 47701, 43044, 43053, 43564, 43588, 43687, 43695, 43700, 43704, 43707,
-       43712, 43724, 43726, 43729, 43732, 43810, 43822, 43828, 43836,
-       43848, 43864, 43865, 43878, 43900, 43908, 43909, 44010, 44011,
-       44013, 44028, 44031, 44036, 44046, 44051, 44059, 44074, 44100,
-       44104, 44115, 44116, 44139, 44157, 44159, 44161, 44165, 44205,
-       44221, 44222, 44225, 44231, 44236, 44241, 44243, 44255, 44256,
-       44285, 44287, 44292, 44311, 44538, 44541, 44547, 44571, 44574,
-       44575, 44579, 44583, 44636, 44640, 44649, 44655, 44678, 44687,
-       44834, 44839, 44842, 45179, 45185, 45187, 45188, 45205, 45212,
-       45228, 45231, 45238, 45243, 45244, 45253, 45256, 45269, 45282,
-       45294, 45301, 45305, 45306, 45307, 45316, 45320, 45324, 45325,
-       45338, 45342, 45376, 45382, 45385, 45386, 45392, 45394, 45423,
-       45424, 45428, 45441, 45442, 45457, 45482, 45484, 45490, 45495,
-       46517, 46533, 46541, 47082, 47085, 47088, 47280, 47288, 47303,
-       47309, 47385, 47386, 47394, 47400, 47404, 47450, 47451, 47478,
-       47505, 47509, 48219, 48535, 48546, 49299, 49870, 50076, 50091,
-       50715, 50744, 50752, 50792, 50822, 50823, 50825, 50826, 50828,
-       50830, 50833, 50850, 51819, 51821, 51876, 52119, 52314, 52362,
-       52559, 52901, 52907, 52909, 53085, 53248, 53326, 53329, 53330,
-       53331, 53419, 53426, 53442, 53499, 53501]
+       47710, 47709, 47707, 47706, 47704, 47703, 47702, 47701]
+print('Runs to process: ', len(loop_over))
 
-cannot_copy_runid = []
-cannot_copy_dt = []
-for r in tqdm(loop_over):
-    run = str(r).zfill(6)
-    for dt in to_copy:
-        if (not st_dali.is_stored(run, dt)) and st_midway.is_stored(run, dt):
-            try:
-                st_midway.copy_to_frontend(run, dt)
-            except:
-                cannot_copy_runid.append(run)
-                cannot_copy_dt.append(dt)
-                print(f'Cannot copy {run} {dt}')
-
-import numpy as np
-np.save('/home/yuanlq/cannot_copy_runid.npy', np.array(cannot_copy_runid))
-np.save('/home/yuanlq/cannot_copy_dt.npy', np.array(cannot_copy_dt))
+p.execute(loop_over=loop_over, max_num_submit=2000, nmax=10000)
