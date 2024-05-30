@@ -12,6 +12,7 @@ st = cutax.xenonnt_offline(output_folder='/dali/lgrandi/yuanlq/collected_outsour
                            _auto_append_rucio_local=False,
                            _rucio_local_path='/dali/lgrandi/rucio', include_rucio_local=True
                            )
+st.storage.append(strax.DataDirectory("/dali/lgrandi/yuanlq/collected_outsource/finished_data/keep", readonly=True))
 #st = cutax.xenonnt_offline(output_folder='/dali/lgrandi/peaklets_tarballs',
 #                           _auto_append_rucio_local=False,
 #                           include_rucio_local=False)
