@@ -57,11 +57,11 @@ print("Finished processing %s"%(runid))
 
 # Test if we can load the results without problem
 try:
-    _data = st.get_array(runid, ("peaks", "peak_positions", "peak_basics"))
-    _data = st.get_array(runid, ("cuts_basic", "event_info"))
+    _data = st.get_array(runid, ("peaks", "peak_positions", "peak_basics"), keep_columns=("time"))
+    _data = st.get_array(runid, ("cuts_basic", "event_info"), keep_columns=("time"))
     print("Successfully loaded the results.")
 
-    with open("/dali/lgrandi/yuanlq/loadtest/results/events_237_20240529_loadable.txt" "a") as f:
+    with open("/dali/lgrandi/yuanlq/loadtest/results/events_237_20240529_loadable.txt", "a") as f:
         f.write(f"{runid}\n")
 except Exception as e:
     print("Failed to load the results.")
