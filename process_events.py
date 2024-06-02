@@ -44,6 +44,7 @@ to_process = ['peaklets', 'merged_s2s', 'peak_basics',
               'event_basics', 'event_area_per_channel', 'event_pattern_fit', 'event_info', 'event_ms_naive', 'event_ambience', 'event_shadow',
               'event_ms_naive', 'event_n_channel', 'event_top_bottom_params',
               'peak_s1_positions_cnn', 'cuts_basic']
+#to_process.remove("event_area_per_channel")
 #to_process = ['event_ambience', 'event_shadow', 'peak_classification_bayes', 'event_w_bayes_class']
 
 for dt in to_process:
@@ -61,7 +62,7 @@ try:
     _data = st.get_array(runid, ("cuts_basic", "event_info"), keep_columns=("time"))
     print("Successfully loaded the results.")
 
-    with open("/dali/lgrandi/yuanlq/loadtest/results/events_237_20240529_loadable.txt", "a") as f:
+    with open("/dali/lgrandi/yuanlq/loadtest/results/events_237_20240601_loadable.txt", "a") as f:
         f.write(f"{runid}\n")
 except Exception as e:
     print("Failed to load the results.")
